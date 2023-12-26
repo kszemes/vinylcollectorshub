@@ -1,0 +1,23 @@
+.home {
+    display: flex;
+}
+
+.posts {
+    flex: 1;
+    margin-right: 250px;
+}
+
+@media (max-width: 800px) {
+    .home{
+        display: flex;
+        flex-direction: column;
+    }
+    .posts {
+        display: flex;
+        margin-right: 0;
+    }
+}
+
+.vinyl-image {
+    max-height: 50px;
+}
