@@ -10,16 +10,14 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import {NavLink, useNavigate} from "react-router-dom";
-import { useContext } from "react";
+import {useContext, useEffect} from "react";
 import { UserContext } from "../context/UserContext";
-import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
-import { useEffect } from "react";
 import {UserAvatar} from "./UserAvatar.jsx";
 
 const pages = [
-    { path: "/", name: "Home" },
-    { path: "/about", name: "About" },
+    { path: "/", name: "Vinyls for SALE", order: 0 },
+    { path: "/about", name: "About", order: 9},
 ];
 const settings = [
     { path: "/profile", name: "Profile" },
@@ -34,15 +32,26 @@ export const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) setNavPages([...pages, { path: "/create", name: "New Vinyl" }]);
+        if (user) setNavPages([...pages, { path: "/create", name: "Add New Vinyl", order: 1 }]);
         else setNavPages([...pages]);
     }, [user]);
+
+    const sortNavPagesByOrder = () => {
+        navPages.sort((p1, p2) => {
+            if (p1.order > p2.order) {
+                return 1;
+            }
+            if (p1.order < p2.order) {
+                return -1;
+            }
+            return 0;
+        })
+    }
 
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
     const handleOpenUserMenu = (event) => {
-        console.log(user.photoUrl)
         setAnchorElUser(event.currentTarget);
     };
 
@@ -52,7 +61,6 @@ export const Navbar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-    //console.log(user);
     return (
         <AppBar
             position="fixed"
@@ -60,6 +68,7 @@ export const Navbar = () => {
                 backgroundImage: "linear-gradient(to top, #a3bded 0%, #6991c7 100%)",
             }}
         >
+            {sortNavPagesByOrder()}
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

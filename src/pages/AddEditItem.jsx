@@ -3,7 +3,7 @@ import React from 'react';
 export const AddEditItem = () => {
     return (
         <div>
-            New Vinyl
+            Add New Vinyl
         </div>
     );
 };
