@@ -24,7 +24,7 @@ export const UserProvider = ({children}) => {
 
     const logoutUser = async () => {
         await signOut(auth);
-        if (location.pathname == '/create' || location.pathname == '/profile') {
+        if (location.pathname === '/create' || location.pathname === '/profile') {
             navigate('/');
         }
     }

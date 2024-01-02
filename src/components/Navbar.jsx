@@ -9,13 +9,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import {NavLink, useNavigate} from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import Avatar from "@mui/material/Avatar";
 import { useState } from "react";
 import { useEffect } from "react";
+import {UserAvatar} from "./UserAvatar.jsx";
 
 const pages = [
     { path: "/", name: "Home" },
@@ -34,7 +34,7 @@ export const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) setNavPages([...pages, { path: "/create", name: "Create Blog" }]);
+        if (user) setNavPages([...pages, { path: "/create", name: "New Vinyl" }]);
         else setNavPages([...pages]);
     }, [user]);
 
@@ -42,6 +42,7 @@ export const Navbar = () => {
         setAnchorElNav(event.currentTarget);
     };
     const handleOpenUserMenu = (event) => {
+        console.log(user.photoUrl)
         setAnchorElUser(event.currentTarget);
     };
 
@@ -187,12 +188,8 @@ export const Navbar = () => {
                             </>
                         ) : (
                             <Box sx={{ flexGrow: 0 }}>
-
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar
-                                        alt="Remy Sharp"
-                                        src="/static/images/avatar/2.jpg"
-                                    />
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, maxHeight: '65px', flex: 'none' }}>
+                                    <UserAvatar />
                                 </IconButton>
                                 <Menu
                                     sx={{ mt: "45px" }}
@@ -213,7 +210,7 @@ export const Navbar = () => {
                                     {settings.map((setting) => (
                                         <MenuItem key={setting.name} onClick={handleCloseUserMenu}>
                                             <Typography textAlign="center"
-                                                        onClick={()=> setting.name == 'Logout' ? logoutUser() : navigate(setting.path)}
+                                                        onClick={()=> setting.name === 'Logout' ? logoutUser() : navigate(setting.path)}
                                             >{setting.name}
                                             </Typography>
                                         </MenuItem>
