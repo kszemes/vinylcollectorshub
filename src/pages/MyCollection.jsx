@@ -1,14 +1,22 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
 import {UserContext} from "../context/UserContext.jsx";
-import {useForm} from "react-hook-form";
-import {read, getVinylsByUid} from "../utility/vinyl_crud.js";
+import {getVinylsByUid} from "../utility/vinyl_crud.js";
 import {NotFound} from "./NotFound.jsx";
 import DataTable from "../components/DataTable.jsx";
+import {AddEditItem} from "./AddEditItem.jsx";
 
 export const MyCollection = () => {
+
     const {user} = useContext(UserContext)
     const [vinyls, setVinyls] = useState(null);
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         getVinylsByUid(setVinyls, user);
@@ -21,9 +29,24 @@ export const MyCollection = () => {
             {vinyls ?
                 <>
                     <h1>My Collection: {vinyls.length} piece of record</h1>
+                    <button className='btn btn-success' onClick={handleOpen}>New Record</button>
                     <div>
-                        <DataTable data={vinyls}/>
+                        <DataTable data={vinyls} initialState={
+                                {
+                                    pagination: {
+                                    paginationModel: { page: 0, pageSize: 5 },
+                                },
+                                    columns: {
+                                        columnVisibilityModel: {
+                                            editButton: true,
+                                        },
+                                    },
+                        }}/>
                     </div>
+                    <AddEditItem open={open}
+                                 onOpen={handleOpen}
+                                 onClose={handleClose}
+                                 id={null}/>
                 </>
                 :
                 <div>Loading...</div>

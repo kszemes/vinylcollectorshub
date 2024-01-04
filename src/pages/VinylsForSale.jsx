@@ -21,7 +21,17 @@ export const VinylsForSale = () => {
                 <>
                     <h1>Vinyls for sale: {vinyls.length} piece of record</h1>
                     <div>
-                        <DataTable data={vinyls}/>
+                        <DataTable data={vinyls} initialState={
+                            {
+                                pagination: {
+                                    paginationModel: { page: 0, pageSize: 5 },
+                                },
+                                columns: {
+                                    columnVisibilityModel: {
+                                        editButton: false,
+                                    },
+                                },
+                            }}/>
                     </div>
                 </>
                 :

@@ -50,7 +50,6 @@ export const read = async (id, setVinyl) => {
     try {
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-            console.log(docSnap.data().id)
             setVinyl(new Vinyl(docSnap.data(), docSnap.id))
         } else {
             console.log('Nincs ilyen Documentum az alábbi ID-vel: ' + id)

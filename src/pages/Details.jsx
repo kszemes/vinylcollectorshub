@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {Backdrop, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import {read} from "../utility/vinyl_crud.js";
-import {useParams} from "react-router-dom";
 
 const style = {
     position: 'absolute',
@@ -15,12 +14,13 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    p: 4,
+    p: 2,
     fontFamily: 'Motserrat',
     marginTop: 10,
+    boxSizing: 'content-box'
 };
 
-export const Details = ({ onOpen, onClose, open, row }) => {
+export const Details = ({onOpen, onClose, open, row}) => {
     const [vinyl, setVinyl] = useState(null);
 
     useEffect(() => {
@@ -40,14 +40,25 @@ export const Details = ({ onOpen, onClose, open, row }) => {
                     <Box sx={style}>
                         {row ?
                             <>
-                            <div className="content-modal">
-                                <img src={row.image} alt='Vinyl Image'/>
-                                <Box sx={{display: 'flex', flexDirection: 'column'}}>
-                                    <div>
-                                        <b>{row?.title}</b>
+                                <div className="content-modal">
+                                    <div className='d-flex m-auto'>
+                                        <img className='col' src={row.image} alt='Vinyl Image'/>
+                                        <div className='col col-auto m-1'>
+                                            <div>Artist: {row.artist}</div>
+                                            <div>Title: {row.title}</div>
+                                            <div>Label: {row.label}</div>
+                                            <div>Format: {row.format.map((data) =>
+                                                <li key={data}>{data}</li>)}
+                                            </div>
+                                            <div>Country: {row.country}</div>
+                                            <div>Released: {row.released}</div>
+                                            <div>Genre: {row.genre}</div>
+                                            <div>Style: {row.style.map((data) =>
+                                                <li key={data}>{data}</li>)}
+                                            </div>
+                                        </div>
                                     </div>
-                                </Box>
-                            </div>
+                                </div>
                             </>
                             :
                             <div>Loading...</div>
