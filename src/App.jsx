@@ -2,7 +2,7 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {UserProvider} from "./context/UserContext.jsx";
-import {Home} from "./pages/Home.jsx";
+import {VinylsForSale} from "./pages/VinylsForSale.jsx";
 import {Details} from "./pages/Details.jsx";
 import {AddEditItem} from "./pages/AddEditItem.jsx";
 import {NotFound} from "./pages/NotFound.jsx";
@@ -13,6 +13,7 @@ import {PasswordReset} from "./pages/PasswordReset.jsx";
 import {Navbar} from "./components/Navbar.jsx";
 import {ConfirmProvider} from "material-ui-confirm";
 import {Profile} from "./pages/Profile.jsx";
+import {MyCollection} from "./pages/MyCollection.jsx";
 
 function App() {
     return (
@@ -22,11 +23,12 @@ function App() {
                         <div className='app'>
                             <Navbar/>
                             <Routes>
-                                <Route path='/' element={<Home/>}/>
+                                <Route path='/' element={<VinylsForSale/>}/>
                                 <Route path='/about' element={<About/>}/>
                                 <Route path='/detail/:id' element={<Details/>}/>
                                 <Route path='/update/:id' element={<AddEditItem/>}/>
                                 <Route path='/create' element={<AddEditItem/>}/>
+                                <Route path='/mycollection' element={<MyCollection/>}/>
                                 <Route path='/signin' element={<SignIn/>}/>
                                 <Route path='/signup' element={<SignUp/>}/>
                                 <Route path='/pwreset' element={<PasswordReset/>}/>

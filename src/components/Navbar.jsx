@@ -32,7 +32,7 @@ export const Navbar = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (user) setNavPages([...pages, { path: "/create", name: "Add New Vinyl", order: 1 }]);
+        if (user) setNavPages([...pages, { path: "/mycollection", name: "My collection", order: 1 }]);
         else setNavPages([...pages]);
     }, [user]);
 
