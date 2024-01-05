@@ -19,7 +19,7 @@ import {Vinyl} from "../model/vinyl.js"
 
 export const create = async (formData) => {
     const collectionRef = collection(db, "vinyl");
-    const newItem = {...formData, timeStamp: serverTimestamp()};
+    const newItem = {...formData};
     const newDocRef = await addDoc(collectionRef, newItem);
 }
 
@@ -59,9 +59,9 @@ export const read = async (id, setVinyl) => {
     }
 }
 
-export const update = async (id, {title, category, description}) => {
+export const update = async (id, formData) => {
     const docRef = doc(db, "vinyl", id);
-    await updateDoc(docRef, {title, category, description})
+    await updateDoc(docRef, formData)
 }
 
 export const delete_ = async (id) => {

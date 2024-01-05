@@ -19,7 +19,7 @@ export const MyCollection = () => {
     };
 
     useEffect(() => {
-        getVinylsByUid(setVinyls, user);
+        if (user) getVinylsByUid(setVinyls, user);
     }, []);
 
     if (!user) return (<NotFound/>)
@@ -46,7 +46,10 @@ export const MyCollection = () => {
                     <AddEditItem open={open}
                                  onOpen={handleOpen}
                                  onClose={handleClose}
-                                 id={null}/>
+                                 id={null}
+                                 handleClose={handleClose}
+                    />
+
                 </>
                 :
                 <div>Loading...</div>

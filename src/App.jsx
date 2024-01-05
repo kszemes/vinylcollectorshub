@@ -14,30 +14,42 @@ import {Navbar} from "./components/Navbar.jsx";
 import {ConfirmProvider} from "material-ui-confirm";
 import {Profile} from "./pages/Profile.jsx";
 import {MyCollection} from "./pages/MyCollection.jsx";
+import {FormatProvider} from "./context/FormatProvider.jsx";
+import {GenreProvider} from "./context/GenreProvider.jsx";
+import {StyleProvider} from "./context/StyleProvider.jsx";
+import {CountryProvider} from "./context/CountryProvider.jsx";
 
 function App() {
     return (
         <BrowserRouter>
-                <UserProvider>
-                    <ConfirmProvider>
-                        <div className='app'>
-                            <Navbar/>
-                            <Routes>
-                                <Route path='/' element={<VinylsForSale/>}/>
-                                <Route path='/about' element={<About/>}/>
-                                <Route path='/detail/:id' element={<Details/>}/>
-                                <Route path='/update/:id' element={<AddEditItem/>}/>
-                                <Route path='/create' element={<AddEditItem/>}/>
-                                <Route path='/mycollection' element={<MyCollection/>}/>
-                                <Route path='/signin' element={<SignIn/>}/>
-                                <Route path='/signup' element={<SignUp/>}/>
-                                <Route path='/pwreset' element={<PasswordReset/>}/>
-                                <Route path='/profile' element={<Profile/>}/>
-                                <Route path='*' element={<NotFound/>}/>
-                            </Routes>
-                        </div>
-                    </ConfirmProvider>
-                </UserProvider>
+            <CountryProvider>
+                <StyleProvider>
+                    <GenreProvider>
+                        <FormatProvider>
+                            <UserProvider>
+                                <ConfirmProvider>
+                                    <div className='app'>
+                                        <Navbar/>
+                                        <Routes>
+                                            <Route path='/' element={<VinylsForSale/>}/>
+                                            <Route path='/about' element={<About/>}/>
+                                            <Route path='/detail/:id' element={<Details/>}/>
+                                            <Route path='/update/:id' element={<AddEditItem/>}/>
+                                            <Route path='/create' element={<AddEditItem/>}/>
+                                            <Route path='/mycollection' element={<MyCollection/>}/>
+                                            <Route path='/signin' element={<SignIn/>}/>
+                                            <Route path='/signup' element={<SignUp/>}/>
+                                            <Route path='/pwreset' element={<PasswordReset/>}/>
+                                            <Route path='/profile' element={<Profile/>}/>
+                                            <Route path='*' element={<NotFound/>}/>
+                                        </Routes>
+                                    </div>
+                                </ConfirmProvider>
+                            </UserProvider>
+                        </FormatProvider>
+                    </GenreProvider>
+                </StyleProvider>
+            </CountryProvider>
         </BrowserRouter>
     )
 }

@@ -114,12 +114,15 @@ export default function DataTable({data, initialState}) {
                 pageSizeOptions={[5, 10]}
                 initialState={initialState}
             />
+            {(openEditModal===true) ?
             <AddEditItem
                 open={openEditModal}
                 onOpen={handleOpenEditModal}
                 onClose={handleCloseEditModal}
                 object={row}
-            />
+                handleClose={handleCloseEditModal}
+            /> : <></>
+            }
         </div>
     );
 }

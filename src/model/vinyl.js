@@ -21,35 +21,6 @@ export class Vinyl {
         this.price = docSnapData.price;
         this.thumbnailImage = docSnapData.thumbnailImage;
         this.userId = docSnapData.userId;
-        this.errors = {};
-    }
-
-    isValid() {
-        if (this.isEmpty(this.artist)) {
-            this.errors.artist = 'Artist is required and should not be empty!';
-        }
-
-        if (this.isEmpty(this.title)) {
-            this.errors.title = 'Title is required and should not be empty!';
-        }
-
-        if (this.isEmpty(this.label)) {
-            this.errors.label = 'Label is required and should not be empty!';
-        }
-
-        if (this.released && (typeof this.released !== 'number' && this.released.length === 4) ) {
-            this.errors.released = 'Release date is not valid!';
-        }
-
-        return Object.keys(this.errors).length === 0;
-    }
-
-    getErrors() {
-        return this.errors;
-    }
-
-    isEmpty(value) {
-        return (value == null || value.trim().length === 0);
     }
 
 }
