@@ -5,6 +5,7 @@ import {Details} from "./Details.jsx";
 import Button from "@mui/material/Button";
 import {AddEditItem} from "./AddEditItem.jsx";
 import {EditPicture} from "./EditPicture.jsx";
+import {DeleteModal} from "./DeleteModal.jsx";
 
 const thumbnailImageSizeX = 125;
 const thumbnailImageSizeY = 125;
@@ -16,6 +17,7 @@ export default function DataTable({data, initialState}) {
     const dataArray = Array.from(data);
     const [openDetailModal, setOpenDetailModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [openEditPictureModal, setOpenEditPictureModal] = useState(false);
 
     const handleOpenDetailModal = (row) => {
@@ -34,6 +36,15 @@ export default function DataTable({data, initialState}) {
 
     const handleCloseEditModal = () => {
         setOpenEditModal(false);
+    };
+
+    const handleOpenDeleteModal = (row) => {
+        setRow(row);
+        setOpenDeleteModal(true);
+    };
+
+    const handleCloseDeleteModal = () => {
+        setOpenDeleteModal(false);
     };
 
     const handleOpenEditPictureModal = (row) => {
@@ -75,7 +86,7 @@ export default function DataTable({data, initialState}) {
         },
         {field: 'artist', headerName: 'Artist', minWidth: 120},
         {field: 'title', headerName: 'Title', minWidth: 180},
-        {field: 'label', headerName: 'Label', minWidth: 200},
+        {field: 'label', headerName: 'Label', minWidth: 220},
         {
             field: 'format',
             headerName: 'Format',
@@ -88,7 +99,7 @@ export default function DataTable({data, initialState}) {
         {
             field: 'style',
             headerName: 'Style',
-            width: 130,
+            width: 150,
             renderCell: (styles) => <div>{styles.value.map((data) => <li key={data}>{data}</li>)}</div>
         },
         {field: 'forSale', headerName: 'For Sale?', width: 80},
@@ -111,7 +122,7 @@ export default function DataTable({data, initialState}) {
                     <div>
                         <div className='row'>
                             <button onClick={() => handleOpenEditModal(params.row)} className='btn btn-success col-5'>Edit</button>
-                            <button className='btn btn-danger col-7'>Delete</button>
+                            <button onClick={() => handleOpenDeleteModal(params.row)} className='btn btn-danger col-7'>Delete</button>
                         </div>
                         <div className='row'>
                             <button onClick={() => handleOpenEditPictureModal(params.row)} className='btn btn-info'>Edit Image</button>
@@ -156,6 +167,16 @@ export default function DataTable({data, initialState}) {
                     onOpen={handleOpenEditPictureModal}
                     onClose={handleCloseEditPictureModal}
                     row={row}
+                    handleClose={handleCloseEditPictureModal}
+                /> : <></>
+            }
+            {(openDeleteModal === true) ?
+            <DeleteModal
+                    open={openDeleteModal}
+                    onOpen={handleOpenDeleteModal}
+                    onClose={handleCloseDeleteModal}
+                    row={row}
+                    handleClose={handleCloseDeleteModal}
                 /> : <></>
             }
         </>

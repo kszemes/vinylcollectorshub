@@ -22,11 +22,11 @@ import {CountryProvider} from "./context/CountryProvider.jsx";
 function App() {
     return (
         <BrowserRouter>
-            <CountryProvider>
-                <StyleProvider>
-                    <GenreProvider>
-                        <FormatProvider>
-                            <UserProvider>
+            <UserProvider>
+                <CountryProvider>
+                    <StyleProvider>
+                        <GenreProvider>
+                            <FormatProvider>
                                 <ConfirmProvider>
                                     <div className='app'>
                                         <Navbar/>
@@ -43,11 +43,11 @@ function App() {
                                         </Routes>
                                     </div>
                                 </ConfirmProvider>
-                            </UserProvider>
-                        </FormatProvider>
-                    </GenreProvider>
-                </StyleProvider>
-            </CountryProvider>
+                            </FormatProvider>
+                        </GenreProvider>
+                    </StyleProvider>
+                </CountryProvider>
+            </UserProvider>
         </BrowserRouter>
     )
 }

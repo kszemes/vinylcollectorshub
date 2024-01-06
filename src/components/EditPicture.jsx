@@ -5,7 +5,7 @@ import {read, update} from "../utility/vinyl_crud.js";
 import {Col, Form, FormGroup, Row} from "reactstrap";
 import {useForm} from "react-hook-form";
 import {Loader} from "./Loader.jsx";
-import {uploadFile} from "../utility/file_crud.js";
+import {deleteFile, uploadFile} from "../utility/file_crud.js";
 
 const style = {
     position: 'absolute',
@@ -24,10 +24,11 @@ const style = {
     boxSizing: 'content-box'
 };
 
-export const EditPicture = ({onOpen, onClose, open, row}) => {
+export const EditPicture = ({onOpen, onClose, open, row, handleClose}) => {
     const [vinyl, setVinyl] = useState(null);
     const [loading, setLoading] = useState(false)
     const [photo, setPhoto] = useState(null)
+    const [previousVinylPhoto, setPreviousVinylPhoto] = useState(null)
     const [uploaded, setUploaded] = useState(false)
     const {register, handleSubmit, formState: {errors}} = useForm();
 
@@ -41,11 +42,9 @@ export const EditPicture = ({onOpen, onClose, open, row}) => {
         e.preventDefault()
         setLoading(true)
         try {
+            if (previousVinylPhoto != null) deleteFile(previousVinylPhoto);
             const file = data.file[0]
-            const photoUrl = await uploadFile(file, 'images')
-            console.log('a feltöltött fájl URLje:', photoUrl);
-            vinyl.image = photoUrl;
-            console.log("Vinyl image: "+vinyl.image)
+            vinyl.image = await uploadFile(file, 'images');
             const newData = {...vinyl}
             await update(vinyl.id,{...newData});
             setUploaded(true)
@@ -55,6 +54,7 @@ export const EditPicture = ({onOpen, onClose, open, row}) => {
             setLoading(false)
         }
         e.target.reset()
+        handleClose();
     }
 
     return (
@@ -74,8 +74,8 @@ export const EditPicture = ({onOpen, onClose, open, row}) => {
                                 <img className='col' src={row.image} alt='Record Image'/>
                             </div>
                             <div className='row text-center'>
-                                <h2 className='col-6 border'>Artist: {row.artist}</h2>
-                                <h2 className='col-6 border'>Title: {row.title}</h2>
+                                <h2 className='col-6 border'>{row.artist}</h2>
+                                <h2 className='col-6 border'>{row.title}</h2>
                             </div>
                                 <Form onSubmit={handleSubmit(onSubmit)}>
                                     <div className='text-center'>
@@ -86,6 +86,7 @@ export const EditPicture = ({onOpen, onClose, open, row}) => {
                                             <FormGroup>
                                                 <input type="file" {...register('file', {
                                                     required: true, validate: (value) => {
+                                                        if (vinyl?.image.length > 0) setPreviousVinylPhoto(vinyl.image);
                                                         const acceptedFormats = ['jpg', 'png', 'jpeg', 'bmp']
                                                         const fileExtension = value[0]?.name.split('.').pop().toLowerCase()
                                                         console.log(fileExtension)
