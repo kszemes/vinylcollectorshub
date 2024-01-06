@@ -9,4 +9,4 @@ Az alkalmazás célja, hogy felhasználói regisztráció után lehetőség nyí
   - Továbbá rendelkezhet arról, hogy egy lemez eladó legyen-e
 
 - Nem regisztrált felhasználók az eladó lemezek listáját tudják böngészni. 
-  - Vásárlási igény esetén a _Buy!_ gombra kattintva tudnak egyeztetni az eladóval az adás-vételről.
+  - Vásárlási igény esetén a _Buy!_ gombra kattintva tudnak egyeztetni az eladóval az adás-vételről email-ben.
