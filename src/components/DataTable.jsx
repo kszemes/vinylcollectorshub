@@ -90,18 +90,22 @@ export default function DataTable({data, initialState}) {
             }
         },
         {
-            field: 'editButton',
+            field: 'actions',
             headerName: 'Actions',
             description: 'Actions column',
+            width: 120,
             sortable: false,
             renderCell: (params) => {
                 return (
-                    <Button
-                        onClick={() => handleOpenEditModal(params.row)}
-                        variant='contained'
-                    >
-                        Edit
-                    </Button>
+                    <div>
+                        <div className='row'>
+                            <button onClick={() => handleOpenEditModal(params.row)} className='btn btn-success col-5'>Edit</button>
+                            <button className='btn btn-danger col-7'>Delete</button>
+                        </div>
+                        <div className='row'>
+                            <button className='btn btn-info'>Edit Image</button>
+                        </div>
+                    </div>
                 );
             }
         }
@@ -109,7 +113,7 @@ export default function DataTable({data, initialState}) {
 
     return (
         <>
-            <DataGrid
+        <DataGrid
                 rows={rows}
                 getRowHeight={() => 'auto'}
                 getRowId={(row) => row?.id}

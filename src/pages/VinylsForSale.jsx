@@ -23,7 +23,7 @@ export const VinylsForSale = () => {
                                 },
                                 columns: {
                                     columnVisibilityModel: {
-                                        editButton: false,
+                                        actions: false,
                                     },
                                 },
                             }}/>

@@ -38,7 +38,8 @@ export const MyCollection = () => {
                                 },
                                     columns: {
                                         columnVisibilityModel: {
-                                            editButton: true,
+                                            actions: true,
+                                            email: false
                                         },
                                     },
                         }}/>
