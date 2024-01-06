@@ -3,8 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import {UserProvider} from "./context/UserContext.jsx";
 import {VinylsForSale} from "./pages/VinylsForSale.jsx";
-import {Details} from "./pages/Details.jsx";
-import {AddEditItem} from "./pages/AddEditItem.jsx";
+import {Details} from "./components/Details.jsx";
+import {AddEditItem} from "./components/AddEditItem.jsx";
 import {NotFound} from "./pages/NotFound.jsx";
 import {About} from "./pages/About.jsx";
 import {SignIn} from "./pages/SignIn.jsx";
@@ -33,8 +33,6 @@ function App() {
                                         <Routes>
                                             <Route path='/' element={<VinylsForSale/>}/>
                                             <Route path='/about' element={<About/>}/>
-                                            <Route path='/detail/:id' element={<Details/>}/>
-                                            <Route path='/update/:id' element={<AddEditItem/>}/>
                                             <Route path='/create' element={<AddEditItem/>}/>
                                             <Route path='/mycollection' element={<MyCollection/>}/>
                                             <Route path='/signin' element={<SignIn/>}/>

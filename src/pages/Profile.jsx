@@ -16,7 +16,6 @@ export const Profile = () => {
     const [loading, setLoading] = useState(false)
     const [photo, setPhoto] = useState(null)
     const [uploaded, setUploaded] = useState(false)
-    const param = useParams();
 
     if (!user) return (<NotFound/>)
 
@@ -45,7 +44,7 @@ export const Profile = () => {
         }
         <Form onSubmit={handleSubmit(onSubmit)}>
             <Row>
-                {!param.id && <Col md={4}>
+                <Col md={4}>
                     <FormGroup>
                         <input type="file" {...register('file', {
                             required: true, validate: (value) => {
@@ -60,7 +59,7 @@ export const Profile = () => {
                                onChange={(e) => setPhoto(URL.createObjectURL(e.target.files[0]))}
                         />
                     </FormGroup>
-                </Col>}
+                </Col>
                 <Col md={2} className=''>
                     <input type="submit" className="btn btn-primary"/>
                 </Col>
@@ -69,7 +68,7 @@ export const Profile = () => {
                 </Col>
             </Row>
             {loading && <Loader/>}
-            {uploaded && <MyAlert text='Avatar saved succesfully!'/>}
+            {uploaded && alert('Avatar saved succesfully!')}
         </Form>
         <button className='btn btn-danger m-2'>Delete User Account</button>
         <p className="errMsg">{errors?.file?.message}</p>

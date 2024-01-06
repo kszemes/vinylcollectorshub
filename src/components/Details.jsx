@@ -44,7 +44,7 @@ export const Details = ({onOpen, onClose, open, row}) => {
                             <>
                                 <div className="content-modal">
                                     <div className='d-flex m-auto'>
-                                        <img className='col' src={row.image} alt='Vinyl Image'/>
+                                        <img className='col' src={row.image} alt='Record Image'/>
                                         <div className='col col-auto m-1'>
                                             <div>Artist: {row.artist}</div>
                                             <div>Title: {row.title}</div>

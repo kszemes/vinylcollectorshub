@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
-import {Details} from "../pages/Details.jsx";
+import {Details} from "./Details.jsx";
 import Button from "@mui/material/Button";
-import {AddEditItem} from "../pages/AddEditItem.jsx";
+import {AddEditItem} from "./AddEditItem.jsx";
+import {EditPicture} from "./EditPicture.jsx";
 
 const thumbnailImageSizeX = 125;
 const thumbnailImageSizeY = 125;
@@ -15,6 +16,7 @@ export default function DataTable({data, initialState}) {
     const dataArray = Array.from(data);
     const [openDetailModal, setOpenDetailModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const [openEditPictureModal, setOpenEditPictureModal] = useState(false);
 
     const handleOpenDetailModal = (row) => {
         setRow(row);
@@ -32,6 +34,15 @@ export default function DataTable({data, initialState}) {
 
     const handleCloseEditModal = () => {
         setOpenEditModal(false);
+    };
+
+    const handleOpenEditPictureModal = (row) => {
+        setRow(row);
+        setOpenEditPictureModal(true);
+    };
+
+    const handleCloseEditPictureModal = () => {
+        setOpenEditPictureModal(false);
     };
 
     for (let object of dataArray) {
@@ -56,15 +67,15 @@ export default function DataTable({data, initialState}) {
                         <Button
                             onClick={() => handleOpenDetailModal(params.row)}>
                             {<img style={{maxWidth: thumbnailImageSizeX, maxHeight: thumbnailImageSizeY, padding: '5px'}}
-                                  src={params.row.image} alt='Record Picture'/>}
+                                  src={params.row.image} alt='Record Image'/>}
                         </Button>
                     </>
                 );
             }
         },
-        {field: 'artist', headerName: 'Artist'},
-        {field: 'title', headerName: 'Title'},
-        {field: 'label', headerName: 'Label', minWidth: 120},
+        {field: 'artist', headerName: 'Artist', minWidth: 120},
+        {field: 'title', headerName: 'Title', minWidth: 180},
+        {field: 'label', headerName: 'Label', minWidth: 200},
         {
             field: 'format',
             headerName: 'Format',
@@ -73,15 +84,15 @@ export default function DataTable({data, initialState}) {
         },
         {field: 'country', headerName: 'Country', width: 100},
         {field: 'released', headerName: 'Released', width: 75},
-        {field: 'genre', headerName: 'Genre', width: 100},
+        {field: 'genre', headerName: 'Genre', width: 180},
         {
             field: 'style',
             headerName: 'Style',
             width: 130,
             renderCell: (styles) => <div>{styles.value.map((data) => <li key={data}>{data}</li>)}</div>
         },
-        {field: 'forSale', headerName: 'For Sale?', width: 100},
-        {field: 'price', headerName: 'Price', width: 100},
+        {field: 'forSale', headerName: 'For Sale?', width: 80},
+        {field: 'price', headerName: 'Price', width: 80},
         {
             field: 'email', headerName: 'Email', width: 65,
             renderCell: (params) => {
@@ -103,7 +114,7 @@ export default function DataTable({data, initialState}) {
                             <button className='btn btn-danger col-7'>Delete</button>
                         </div>
                         <div className='row'>
-                            <button className='btn btn-info'>Edit Image</button>
+                            <button onClick={() => handleOpenEditPictureModal(params.row)} className='btn btn-info'>Edit Image</button>
                         </div>
                     </div>
                 );
@@ -136,6 +147,14 @@ export default function DataTable({data, initialState}) {
                     open={openDetailModal}
                     onOpen={handleOpenDetailModal}
                     onClose={handleCloseDetailModal}
+                    row={row}
+                /> : <></>
+            }
+            {(openEditPictureModal === true) ?
+                <EditPicture
+                    open={openEditPictureModal}
+                    onOpen={handleOpenEditPictureModal}
+                    onClose={handleCloseEditPictureModal}
                     row={row}
                 /> : <></>
             }

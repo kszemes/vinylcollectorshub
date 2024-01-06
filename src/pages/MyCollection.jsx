@@ -3,7 +3,7 @@ import {UserContext} from "../context/UserContext.jsx";
 import {getVinylsByUid} from "../utility/vinyl_crud.js";
 import {NotFound} from "./NotFound.jsx";
 import DataTable from "../components/DataTable.jsx";
-import {AddEditItem} from "./AddEditItem.jsx";
+import {AddEditItem} from "../components/AddEditItem.jsx";
 
 export const MyCollection = () => {
 
@@ -50,7 +50,6 @@ export const MyCollection = () => {
                                  id={null}
                                  handleClose={handleClose}
                     />
-
                 </>
                 :
                 <div>Loading...</div>

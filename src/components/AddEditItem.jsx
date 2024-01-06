@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {create, read, update} from "../utility/vinyl_crud.js";
 import {Backdrop, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
-import {Loader} from "../components/Loader.jsx";
+import {Loader} from "./Loader.jsx";
 import {FormatContext} from "../context/FormatProvider.jsx";
 import {recordGenres} from "../context/GenreProvider.jsx";
 import {countryList} from "../context/CountryProvider.jsx";
