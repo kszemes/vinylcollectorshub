@@ -19,7 +19,6 @@ export class Vinyl {
         this.forSale = docSnapData.forSale;
         this.image = docSnapData.image;
         this.price = docSnapData.price;
-        this.thumbnailImage = docSnapData.thumbnailImage;
         this.userId = docSnapData.userId;
     }
 

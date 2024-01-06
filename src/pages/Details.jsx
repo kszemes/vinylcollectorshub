@@ -24,7 +24,9 @@ export const Details = ({onOpen, onClose, open, row}) => {
     const [vinyl, setVinyl] = useState(null);
 
     useEffect(() => {
-        read(row.id, setVinyl)
+        if (row?.id !=null) {
+            read(row.id, setVinyl)
+        }
     }, []);
 
     return (

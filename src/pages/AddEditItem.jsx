@@ -87,7 +87,6 @@ export const AddEditItem = ({onOpen, onClose, open, object, handleClose}) => {
                 vinyl.price = +vinyl.price;
                 vinyl.userId = user.uid;
                 vinyl.image = '';
-                vinyl.thumbnailImage = '';
                 console.log(vinyl)
                 const newData = {...vinyl}
                 await create({...newData})
@@ -101,6 +100,7 @@ export const AddEditItem = ({onOpen, onClose, open, object, handleClose}) => {
 
         }
         e.target.reset()
+        handleClose();
     }
 
     function atLeastOneSelected(value) {
@@ -202,7 +202,7 @@ export const AddEditItem = ({onOpen, onClose, open, object, handleClose}) => {
                                 <Col md={6}>
                                     <FormGroup>
                                         <Label>For Sale?</Label>
-                                        <select id='selectForSale' {...register('forSale', {required: true})} className="form-select">
+                                        <select id='selectForSale' {...register('forSale')} className="form-select">
                                             <option value="false">false</option>
                                             <option value="true">true</option>
                                         </select>

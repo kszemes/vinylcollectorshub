@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
+import {DataGrid} from '@mui/x-data-grid';
 import {Details} from "../pages/Details.jsx";
 import Button from "@mui/material/Button";
 import {useState} from "react";
@@ -16,7 +16,8 @@ export default function DataTable({data, initialState}) {
     const [openDetailModal, setOpenDetailModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
 
-    const handleOpenDetailModal = () => {
+    const handleOpenDetailModal = (row) => {
+        setRow(row);
         setOpenDetailModal(true);
     };
 
@@ -24,7 +25,8 @@ export default function DataTable({data, initialState}) {
         setOpenDetailModal(false);
     };
 
-    const handleOpenEditModal = () => {
+    const handleOpenEditModal = (row) => {
+        setRow(row);
         setOpenEditModal(true);
     };
 
@@ -36,56 +38,44 @@ export default function DataTable({data, initialState}) {
         rows.push({...object})
     }
 
-    const handleDetailModal = ({ row }) => {
-        return (
-            <>
-                <Button onClick={handleOpenDetailModal}>
-                    {<img style={{maxWidth: thumbnailImageSizeX, maxHeight: thumbnailImageSizeY, padding: '5px'}}
-                          src={row.thumbnailImage} alt='Record Picture' />}
-                </Button>
-                <Details
-                    open={openDetailModal}
-                    onOpen={handleOpenDetailModal}
-                    onClose={handleCloseDetailModal}
-                    row={row}
-                />
-            </>
-        );
-    };
-
-    const handleEditModal = (row) => {
-        setRow(row);
-        handleOpenEditModal();
-    };
-
     const columns = [
         {
             field: "thumbnailImage",
             headerName: "Thumbnail",
             width: thumbnailImageSizeX,
             height: thumbnailImageSizeY,
-            renderCell: handleDetailModal
+            renderCell: (params) => {
+                return (
+                    <>
+                        <Button
+                            onClick={() => handleOpenDetailModal(params.row)}>
+                            {<img style={{maxWidth: thumbnailImageSizeX, maxHeight: thumbnailImageSizeY, padding: '5px'}}
+                                  src={params.row.image} alt='Record Picture'/>}
+                        </Button>
+                    </>
+                );
+            }
         },
-        { field: 'artist', headerName: 'Artist' },
-        { field: 'title', headerName: 'Title'},
-        { field: 'label', headerName: 'Label', minWidth: 120},
+        {field: 'artist', headerName: 'Artist'},
+        {field: 'title', headerName: 'Title'},
+        {field: 'label', headerName: 'Label', minWidth: 120},
         {
             field: 'format',
             headerName: 'Format',
             width: 100,
             renderCell: (formats) => <div>{formats.value.map((data) => <li key={data}>{data}</li>)}</div>
         },
-        { field: 'country', headerName: 'Country', width: 100},
-        { field: 'released', headerName: 'Released', width: 75 },
-        { field: 'genre', headerName: 'Genre', width: 100 },
+        {field: 'country', headerName: 'Country', width: 100},
+        {field: 'released', headerName: 'Released', width: 75},
+        {field: 'genre', headerName: 'Genre', width: 100},
         {
             field: 'style',
             headerName: 'Style',
             width: 130,
             renderCell: (styles) => <div>{styles.value.map((data) => <li key={data}>{data}</li>)}</div>
         },
-        { field: 'forSale', headerName: 'For Sale?', width: 100 },
-        { field: 'price', headerName: 'Price', width: 100 },
+        {field: 'forSale', headerName: 'For Sale?', width: 100},
+        {field: 'price', headerName: 'Price', width: 100},
         {
             field: 'editButton',
             headerName: 'Actions',
@@ -94,7 +84,7 @@ export default function DataTable({data, initialState}) {
             renderCell: (params) => {
                 return (
                     <Button
-                        onClick={()=> handleEditModal(params.row)}
+                        onClick={() => handleOpenEditModal(params.row)}
                         variant='contained'
                     >
                         Edit
@@ -105,7 +95,7 @@ export default function DataTable({data, initialState}) {
     ];
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
+        <>
             <DataGrid
                 rows={rows}
                 getRowHeight={() => 'auto'}
@@ -113,16 +103,25 @@ export default function DataTable({data, initialState}) {
                 columns={columns}
                 pageSizeOptions={[5, 10]}
                 initialState={initialState}
+                autoHeight={true}
             />
-            {(openEditModal===true) ?
-            <AddEditItem
-                open={openEditModal}
-                onOpen={handleOpenEditModal}
-                onClose={handleCloseEditModal}
-                object={row}
-                handleClose={handleCloseEditModal}
-            /> : <></>
+            {(openEditModal === true) ?
+                <AddEditItem
+                    open={openEditModal}
+                    onOpen={handleOpenEditModal}
+                    onClose={handleCloseEditModal}
+                    object={row}
+                    handleClose={handleCloseEditModal}
+                /> : <></>
             }
-        </div>
+            {(openDetailModal === true) ?
+                <Details
+                    open={openDetailModal}
+                    onOpen={handleOpenDetailModal}
+                    onClose={handleCloseDetailModal}
+                    row={row}
+                /> : <></>
+            }
+        </>
     );
 }
