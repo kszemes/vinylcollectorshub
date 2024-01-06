@@ -1,13 +1,10 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {Col, Form, FormGroup, Label, Row} from 'reactstrap'
-import {useParams} from "react-router-dom";
 import {UserContext} from "../context/UserContext.jsx";
 import {useForm} from "react-hook-form";
 import {create, read, update} from "../utility/vinyl_crud.js";
-import {NotFound} from "./NotFound.jsx";
 import {Backdrop, Fade, Modal} from "@mui/material";
 import Box from "@mui/material/Box";
-import {MyAlert} from "../components/MyAlert.jsx";
 import {Loader} from "../components/Loader.jsx";
 import {FormatContext} from "../context/FormatProvider.jsx";
 import {recordGenres} from "../context/GenreProvider.jsx";
@@ -68,9 +65,9 @@ export const AddEditItem = ({onOpen, onClose, open, object, handleClose}) => {
         if (vinyl.id) {
             try {
                 let forSale = document.getElementById('selectForSale').value
+                vinyl.userEmail = user.email;
                 vinyl.forSale = forSale === 'true';
                 const newData = {...vinyl}
-                console.log(newData)
                 await update(vinyl.id,{...newData});
                 setUploaded(true);
                 alert('Sikeres módosítás!')
@@ -86,6 +83,7 @@ export const AddEditItem = ({onOpen, onClose, open, object, handleClose}) => {
                 vinyl.forSale = forSale === 'true';
                 vinyl.price = +vinyl.price;
                 vinyl.userId = user.uid;
+                vinyl.userEmail = user.email;
                 vinyl.image = '';
                 console.log(vinyl)
                 const newData = {...vinyl}

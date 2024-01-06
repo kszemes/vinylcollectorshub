@@ -1,8 +1,8 @@
 import * as React from 'react';
+import {useState} from 'react';
 import {DataGrid} from '@mui/x-data-grid';
 import {Details} from "../pages/Details.jsx";
 import Button from "@mui/material/Button";
-import {useState} from "react";
 import {AddEditItem} from "../pages/AddEditItem.jsx";
 
 const thumbnailImageSizeX = 125;
@@ -36,6 +36,12 @@ export default function DataTable({data, initialState}) {
 
     for (let object of dataArray) {
         rows.push({...object})
+    }
+
+    const sendEmailToOwner = (e) => {
+        let emailSubject = encodeURIComponent('Record buying request');
+        let emailBody = encodeURIComponent('Hi, \n\nI wolud like to buy the following record from you: \n\n');
+        window.location.href = 'mailto:'+e.target?.id+'?subject=' + emailSubject + '&body=' + emailBody;
     }
 
     const columns = [
@@ -76,6 +82,13 @@ export default function DataTable({data, initialState}) {
         },
         {field: 'forSale', headerName: 'For Sale?', width: 100},
         {field: 'price', headerName: 'Price', width: 100},
+        {
+            field: 'email', headerName: 'Email', width: 65,
+            renderCell: (params) => {
+                if (params.row.userEmail.length > 0)
+                return  <button id={params.row.userEmail} className="btn btn-secondary" onClick={sendEmailToOwner}>Buy!</button>
+            }
+        },
         {
             field: 'editButton',
             headerName: 'Actions',

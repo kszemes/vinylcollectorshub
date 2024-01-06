@@ -20,6 +20,7 @@ export class Vinyl {
         this.image = docSnapData.image;
         this.price = docSnapData.price;
         this.userId = docSnapData.userId;
+        this.userEmail = docSnapData.userEmail;
     }
 
 }
